@@ -1,16 +1,24 @@
-import requests , json
+import requests
+import json
+
 
 def get_request(url):
-    
-    #GETリクエストを送信
-    reqs = requests.get(url)
 
-    text = reqs.text
+    try:
+        reqs = requests.get(url)
+        reqs.raise_for_status()
 
-    data = json.loads(text)
+        text = reqs.text
 
-    for i in range(3):
-        print(data["links"][i])
-        get_request(data["links"][i])
+        data = json.loads(text)
 
-get_request("https://static.cookpad.com/hr/screen/summer-intern-2022/ac7d359d66.json")
+        for i in range(3):
+            print(data["links"][i])
+            get_request(data["links"][i])
+
+    except requests.exceptions.RequestException as e:
+        exit()
+
+
+get_request(
+    "https://static.cookpad.com/hr/screen/summer-intern-2022/ac7d359d66.json")
