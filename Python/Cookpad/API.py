@@ -19,5 +19,4 @@ def get_request(url):
             get_request(data["links"][i])
 
 
-get_request(
-    "https://static.cookpad.com/hr/screen/summer-intern-2022/ac7d359d66.json")
+get_request("https://static.cookpad.com/hr/screen/summer-intern-2022/ac7d359d66.json")

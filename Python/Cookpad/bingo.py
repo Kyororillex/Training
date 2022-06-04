@@ -39,5 +39,3 @@ for i in lines:
     else:
         continue
     break
-
-
