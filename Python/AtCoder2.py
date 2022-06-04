@@ -2,29 +2,30 @@ N, K, X = map(int, input().split())  # 3個の数字の入力を受け取る
 
 str_list = list(map(int, input().split()))
 
-str_list.sort(reverse=True)
+for index , i in enumerate(str_list):
 
-for index, i in enumerate(str_list):
+    use_qoupon = int(i / X)
 
-    while(i - X > 0):
-
-        if K == 0:
-            break
-
-        else:
-            i = i - X
-            K -= 1
-            str_list[index] = i
-
-str_list.sort(reverse=True)
-
-for index, i in enumerate(str_list):
-
-    i = 0
-    str_list[index] = i
-    K -= 1
-
-    if K == 0 or sum(str_list) == 0:
+    if K - use_qoupon >= 0:
+        str_list[index] = i - (use_qoupon * X)
+        K = K - use_qoupon
+    
+    else:
+        str_list[index] = i - (K * X)
+        K = 0
         break
+        
+if K == 0:
+    print(sum(str_list))
+    
+else:
+    str_list.sort(reverse=True)
 
-print(sum(str_list))
+    if K >= len(str_list):
+        print('0')
+
+    else:
+        for i in range(K):
+            str_list[i] = 0
+
+        print(sum(str_list))
