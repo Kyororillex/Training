@@ -20,5 +20,4 @@ for i in range(N):
                 for b in range(B):
                     print('#',end='')
 
-
         print()
