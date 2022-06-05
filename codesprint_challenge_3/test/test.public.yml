@@ -1,0 +1,131 @@
+preparations:
+  db: &db
+  - db/init.sql
+testcases:
+  # Step1
+  - title: "[基本実装] stpe1.sqlは所在地が New York で業務区分が Software Development 以外の会社の情報をリストアップできる"
+    precheck:
+      not_empty:
+        - sql/step1.sql
+    exec:
+      - db/init.sql
+      - db/01/companies.csv:companies
+      - sql/step1.sql
+    check:
+      equal_to: test/data/public/01.csv
+  # Step2
+  - title: "[基本実装] step2.sqlは社長の情報を正しく取得できる"
+    precheck:
+      not_empty:
+        - sql/step2.sql
+    exec:
+      - db/init.sql
+      - db/02/employees.csv:employees
+      - db/02/companies.csv:companies
+      - sql/step2.sql
+    check:
+      equal_to: test/data/public/02.csv
+  - title: "[基本実装] step2.sqlは正しいカラム順で出力できる"
+    precheck:
+      not_empty:
+        - sql/step2.sql
+    exec:
+      - db/init.sql
+      - db/03/employees.csv:employees
+      - db/03/companies.csv:companies
+    check:
+      ecma: |-
+        function msgWithBoth(description, actual, expected) {
+          return description
+              + "\n出力されたカラムの順序：\n"
+              + JSON.stringify(actual, null, 2)
+              + "\n期待したカラムの順序：\n"
+              + JSON.stringify(expected, null, 2)
+              + "\n";
+        }
+        async conn => {
+          const result = await conn.queryFromFile("sql/step2.sql");
+          const column_list = Object.keys(result[0].records[0]);
+          const expected = ['company_name','name'];
+          expect(column_list).to.eql(expected, msgWithBoth("正しいカラム順で出力されていません", column_list, expected));
+        }
+  # Step3
+  - title: "[基本実装] step3.sqlは社員がこれまで在籍した会社数を取得できる"
+    precheck:
+      not_empty:
+        - sql/step3.sql
+    exec:
+      - db/init.sql
+      - db/04/employees.csv:employees
+      - db/04/employees_histories.csv:employees_histories
+      - sql/step3.sql
+    check:
+      equal_to: test/data/public/04.csv
+  - title: "[基本実装] step3.sqlは正しいカラム順で出力できる"
+    precheck:
+      not_empty:
+        - sql/step3.sql
+    exec:
+      - db/init.sql
+      - db/05/employees.csv:employees
+      - db/05/employees_histories.csv:employees_histories
+    check:
+      ecma: |-
+        function msgWithBoth(description, actual, expected) {
+          return description
+              + "\n出力されたカラムの順序：\n"
+              + JSON.stringify(actual, null, 3)
+              + "\n期待したカラムの順序：\n"
+              + JSON.stringify(expected, null, 3)
+              + "\n";
+        }
+        async conn => {
+          const result = await conn.queryFromFile("sql/step3.sql");
+          const column_list = Object.keys(result[0].records[0]);
+          const expected = ['id','employee_name','company_count'];
+          expect(column_list).to.eql(expected, msgWithBoth("正しいカラム順で出力されていません", column_list, expected));
+        }
+  # Step4
+  - title: "[基本実装] step4.sqlは John Green さんの務める会社の社員情報を取得できる"
+    precheck:
+      not_empty:
+        - sql/step4.sql
+    exec:
+      - db/init.sql
+      - db/06/employees.csv:employees
+      - sql/step4.sql
+    check:
+      equal_to: test/data/public/06.csv
+  # Step5
+  - title: "[更新系クエリ] step5.sqlは John Greenさんの情報を削除できる"
+    precheck:
+      not_empty:
+        - sql/step5.sql
+    exec:
+      - db/init.sql
+      - db/07/employees.csv:employees
+      - db/07/employees_histories.csv:employees_histories
+      - sql/step5.sql
+      - SELECT * FROM employees
+    check:
+      ecma: |-
+        async conn => {
+          const result = await conn.query("SELECT * FROM employees");
+          expect(result).to.recordEqualToCsv('test/data/public/07.csv', _`削除後のデータが期待通りではありません`);
+        }
+  - title: "[更新系クエリ] step5.sqlは John Greenさんの勤務情報を更新できる"
+    precheck:
+      not_empty:
+        - sql/step5.sql
+    exec:
+      - db/init.sql
+      - db/08/employees.csv:employees
+      - db/08/employees_histories.csv:employees_histories
+      - sql/step5.sql
+      - SELECT * FROM employees_histories
+    check:
+      ecma: |-
+        async conn => {
+          const result = await conn.query("SELECT * FROM employees_histories");
+          expect(result).orderBy(['employee_id','start_year','start_month']).to.recordEqualToCsv('test/data/public/08.csv', _`更新後のデータが期待通りではありません`);
+        } 

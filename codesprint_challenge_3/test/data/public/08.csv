@@ -1,0 +1,6 @@
+start_year,start_month,end_year,end_month,employee_id,boss_id,company_id
+2018,4,2018,6,1,7,1
+2018,7,2019,3,1,8,2
+2019,4,__null__,__null__,1,__null__,3
+2018,6,2019,3,2,8,2
+2019,4,2020,6,2,1,3

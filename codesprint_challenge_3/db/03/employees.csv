@@ -1,0 +1,21 @@
+id,name,boss_id,company_id
+1,Ellise Leal,__null__,1
+2,Fionn Davidson,1,1
+3,Noah Harrell,2,1
+4,Krishan Bautista,3,1
+5,Coco Holloway,__null__,2
+6,Keyaan Haney,5,2
+7,Jess Estrada,6,2
+8,Kieron Stott,7,2
+9,Taylan Hurley,__null__,3
+10,Gene Mcpherson,9,3
+11,Akaash Hyde,10,3
+12,Ewan Price,11,3
+13,Hakeem Sloan,__null__,4
+14,Usaamah Scott,13,4
+15,Kitty Vance,13,4
+16,Mateo Mccarthy,13,4
+17,Cathal Richmond,__null__,5
+18,Dixie Olsen,17,5
+19,Jean-Luc Mosley,18,5
+20,Arran Poole,19,5
