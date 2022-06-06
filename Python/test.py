@@ -1,7 +1,4 @@
-import requests
-import json
 import sys
-
 
 query = sys.argv
 
