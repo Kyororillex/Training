@@ -1,23 +1,15 @@
-nyuuryoku = input().split()
+import sys
 
-N = int(nyuuryoku[0])
+def main(lines):
 
-A = int(nyuuryoku[1])
+    for v in lines:
 
-B = int(nyuuryoku[2])
+        a = str(v.split(' ')[0])
 
-for i in range(N):
+    print(a[-2:])
 
-    for j in range(A):
-
-        for l in range(N):
-
-            if (l % 2 == 0 and i % 2 == 0 or l % 2 != 0 and i % 2 != 0) :
-                for b in range(B):
-                    print('.',end='')
-        
-            else:
-                for b in range(B):
-                    print('#',end='')
-
-        print()
+if __name__ == '__main__':
+    lines = []
+    for l in sys.stdin:
+        lines.append(l.rstrip('\r\n'))
+    main(lines)
