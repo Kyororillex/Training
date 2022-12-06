@@ -30,7 +30,12 @@ for i in lines:
         for y in range(3):
             if card[x][y] == i:
                 card[x][y] = 0
-                if int(card[0][0]) + int(card[0][1])+int(card[0][2]) == 0 or int(card[1][0])+int(card[1][1])+int(card[1][2]) == 0 or  int(card[2][0])+int(card[2][1])+int(card[2][2]) == 0 or int(card[0][0])+int(card[1][0])+int(card[2][0]) == 0 or int(card[0][1])+int(card[1][1])+int(card[2][1]) == 0 or int(card[0][2])+int(card[1][2])+int(card[2][2]) == 0 :
+                if int(card[0][0]) + int(card[0][1])+int(card[0][2]) == 0 or \
+                    int(card[1][0])+int(card[1][1])+int(card[1][2]) == 0 or \
+                         int(card[2][0])+int(card[2][1])+int(card[2][2]) == 0 or \
+                            int(card[0][0])+int(card[1][0])+int(card[2][0]) == 0 or\
+                                 int(card[0][1])+int(card[1][1])+int(card[2][1]) == 0 or \
+                                    int(card[0][2])+int(card[1][2])+int(card[2][2]) == 0 :
                     print(count)
                     break
         else:
