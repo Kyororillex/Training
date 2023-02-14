@@ -2,9 +2,7 @@ import sys
 
 #10進数で表されたnけたの整数を並び替えた時にできる最小の整数を出力する
 
-def main(lines):
-
-    str_num = str(lines)
+def main(str_num):
 
     zero_quantity = str_num.count('0')
 
@@ -23,6 +21,7 @@ def main(lines):
     print(sorted_str_num[0] + zero + sorted_str_num[1:])
 
 if __name__ == '__main__':
+    
     # lines = []
     # for l in sys.stdin:
     #     lines.append(l.rstrip('\r\n'))
